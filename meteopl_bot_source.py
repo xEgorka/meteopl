@@ -1,5 +1,4 @@
 #!/usr/bin python3
-
 from telegram.ext import Updater
 import datetime
 from urllib.request import Request, urlopen
@@ -16,7 +15,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="To get a weather forecast send me required location or use /konigsberg shortcut to see a picture for Kaliningrad.")
+    bot.send_message(chat_id=update.message.chat_id, text="To get a weather forecast send me required location or send /Konigsberg command to see a picture for Kaliningrad.\nHow to read forecast: /legend")
 
 
 start_handler = CommandHandler('start', start)
@@ -30,7 +29,7 @@ def konigsberg(bot, update):
     urlopen(q).close()
     soup = BeautifulSoup(mystr, "html.parser")
     url = soup.find('img', class_='border')['src']
-    url = url.replace('=pl','=en')    
+    url = url.replace('=pl','=en')
     bot.send_photo(chat_id=update.message.chat_id, photo=url)
 
 
@@ -51,11 +50,19 @@ def location(bot, update):
     urlopen(q).close()
     soup = BeautifulSoup(mystr, "html.parser")
     url = soup.find('img', class_='border')['src']
-    url = url.replace('=pl','=en')	
+    url = url.replace('=pl','=en')
     bot.send_photo(chat_id=update.message.chat_id, photo=url)
 
 from telegram.ext import MessageHandler, Filters
 location_handler = MessageHandler(Filters.location, location)
 dispatcher.add_handler(location_handler)
-	
+
+
+def legend(bot, update):
+    url = "https://www.meteo.pl/um/metco/leg_um_en_cbase_256.png"
+    bot.send_photo(chat_id=update.message.chat_id, photo=url)
+
+legend_handler = CommandHandler('legend', legend)
+dispatcher.add_handler(legend_handler)
+
 updater.start_polling()
