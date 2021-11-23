@@ -22,8 +22,7 @@ logging.basicConfig(
     level=logging.INFO
 )
 text = (
-    """Share some location to get a weather picture or send /Konigsberg
-    command to see the picture for Kaliningrad.\nHow to read forecast: /legend"""
+    """Share some location to get a weather picture or send /Konigsberg command to see the picture for Kaliningrad.\nHow to read forecast: /legend"""
 )
 
 
@@ -48,8 +47,7 @@ def konigsberg(update, context):
     if randrange(10) == 0:
         context.bot.send_message(
             chat_id=update.message.chat_id, text=(
-                """Try to share any location
-                to get forecast for that place! 📍"""
+                """Try to share any location to get forecast for that place! 📍"""
             )
         )
 
