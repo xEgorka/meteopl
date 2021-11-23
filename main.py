@@ -13,7 +13,7 @@ from telegram.ext import MessageHandler, Filters
 
 #nohup python3 main.py &
 updater = Updater(token=
-    '', 
+    '',
     use_context=True
 )
 dispatcher = updater.dispatcher
@@ -22,8 +22,8 @@ logging.basicConfig(
     level=logging.INFO
 )
 text = (
-    "Share some location to get a weather picture or send /Konigsberg 
-    command to see the picture for Kaliningrad.\nHow to read forecast: /legend"
+    """Share some location to get a weather picture or send /Konigsberg
+    command to see the picture for Kaliningrad.\nHow to read forecast: /legend"""
 )
 
 
@@ -48,8 +48,8 @@ def konigsberg(update, context):
     if randrange(10) == 0:
         context.bot.send_message(
             chat_id=update.message.chat_id, text=(
-                "Try to share any location 
-                to get forecast for that place! 📍"
+                """Try to share any location
+                to get forecast for that place! 📍"""
             )
         )
 
@@ -61,7 +61,7 @@ def location(update, context):
     lat = update.message.location.latitude
     lon = update.message.location.longitude
     url = (
-        "http://www.meteo.pl/um/php/mgram_search.php?NALL=" + str(lat) + 
+        "http://www.meteo.pl/um/php/mgram_search.php?NALL=" + str(lat) +
         "&EALL=" + str(lon) + "&lang=en"
     )
     q = urlopen(url)
