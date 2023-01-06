@@ -1,13 +1,10 @@
-#!/usr/bin python3
 # nohup python3 meteopl_bot.py &
 
 import logging
 from random import randrange
 
 from bs4 import BeautifulSoup
-from telegram.ext import Updater
-from telegram.ext import CommandHandler
-from telegram.ext import MessageHandler, Filters
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 from urllib.request import Request, urlopen
 
 
@@ -22,11 +19,12 @@ def konigsberg(update, context):
     mybytes = urlopen(q).read()
     mystr = mybytes.decode('utf8')
     urlopen(q).close()
+
     soup = BeautifulSoup(mystr, 'html.parser')
     url = soup.find('img', class_='border')['src']
     url = url.replace('=pl', '=en')
-    print(f'chat_id = {update.message.chat_id}')
     context.bot.send_photo(chat_id=update.message.chat_id, photo=url)
+
     if randrange(10) == 0:
         context.bot.send_message(
             chat_id=update.message.chat_id,
@@ -44,6 +42,7 @@ def location(update, context):
         + str(lon)
         + '&lang=en'
     )
+
     q = urlopen(url)
     finalurl = q.geturl()
     row = finalurl[finalurl.index('&row=') + 5 : finalurl.index('&col=')]
@@ -52,10 +51,10 @@ def location(update, context):
     mybytes = urlopen(q).read()
     mystr = mybytes.decode('utf8')
     urlopen(q).close()
+
     soup = BeautifulSoup(mystr, 'html.parser')
     url = soup.find('img', class_='border')['src']
     url = url.replace('=pl', '=en')
-    print(f'chat_id = {update.message.chat_id}')
     context.bot.send_photo(chat_id=update.message.chat_id, photo=url)
 
 
