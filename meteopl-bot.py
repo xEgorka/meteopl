@@ -1,4 +1,4 @@
-# nohup python3 meteopl_bot.py &
+# nohup python3 meteopl-bot.py &
 
 import logging
 from random import randrange
@@ -10,7 +10,8 @@ from urllib.request import Request, urlopen
 
 def start(update, context):
     text = 'Share some location to get a weather picture or send /Konigsberg '
-    text += 'command to see the picture for Kaliningrad.\nHow to read forecast: /legend'
+    text += 'command to see the picture for Kaliningrad.\n'
+    text += 'How to read forecast: /legend'
     context.bot.send_message(chat_id=update.message.chat_id, text=text)
 
 
@@ -68,7 +69,7 @@ def main() -> int:
     dispatcher = updater.dispatcher
     logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        level=logging.INFO
+        level=logging.INFO,
     )
 
     start_handler = CommandHandler('start', start)
